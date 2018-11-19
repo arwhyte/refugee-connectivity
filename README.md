@@ -14,4 +14,5 @@ The accompanying ERD diagram (/static/img/model.png) is what I anticipate as the
 * MySQL
 * See requirements.txt for necessary Python modules
 
+<br>
 <sup>1</sup>Harney, N. (2013). Precarity, affect and problem solving with mobile phones by asylum seekers, refugees and migrants in Naples, Italy. Journal of Refugee Studies, 26(4), 541-557.

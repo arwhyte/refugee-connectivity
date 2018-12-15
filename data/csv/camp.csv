@@ -1,0 +1,47 @@
+,camp_name,campfilename,type,authority,longitude,latitude,Bandwidth Down (kbs),Bandwidth Up (kbs),country,authority_type
+0,Alexandria,Alexandria-Ref_GRE_003,TAS,hellenic army,40.635371,22.453998,250,250,Greece,Military
+1,Diavata,Diavata_GRE_008,TAS,MoD,40.70095,22.86394,5000,3064,Greece,National Government - Non-Immigration
+2,Doliana,XXDoliana_GRE_007,TAS,hellenic army,39.898526,20.578272,256,128,Greece,Military
+3,Eleonas,Eleonas_GRE_013,TAS,MoMP,37.984117,23.696326,5000,5000,Greece,National Government - Immigration
+4,Filipiada,XXFilipiada_GRE_019,TAS,hellenic army;MoMP,39.224421,20.872987,250000,250000,Greece,Military
+5,Kato-Milia,Kato-Milia_GRE_061,TAS,hellenic airforce;RIS,40.2549,22.3421,50000,3000,Greece,Military
+6,Konitsa,XXKonitsa_GRE_026,TAS,MoLSS,40.049359,20.749345,256,128,Greece,National Government - Non-Immigration
+7,Koutsochero,Koutsochero_GRE_028,TAS,hellenic army,39.608,22.2374,250,250,Greece,Military
+8,Lagkadikia,Lagkadikia_GRE_029,TAS,MoMP,40.6290831,23.2453493,1024,500,Greece,National Government - Immigration
+9,Lavrio,Lavrio-New_GRE_030,TAS,hellenic navy,37.7031094,24.0334984,250,128,Greece,Military
+10,Leros-Lepida,Leros-Lepida_GRE_032,RIC,hellenic army;MoMP;FRS,37.118289,26.85961,500,500,Greece,Military
+11,Moria,Moria_GRE_001,RIC,hellenic army;police;MoMP,39.134717,26.503634,512,512,Greece,Military
+12,Nea-Kavala,Nea-Kavala_GRE_034,TAS,hellenic army,40.99059,22.62476,250,250,Greece,Military
+13,Nea-Kavala,Nea-Kavala_GRE_034,TAS,hellenic army,40.99059,22.62476,6000,6000,Greece,Military
+14,Pikpa-Leros,XXPikpa-Leros_GRE_038,RIC,MoMP,37.13463,26.85283,250,250,Greece,National Government - Immigration
+15,Skaramangas,Skaramangas_GRE_014,TAS,hellenic navy,38.0047972,23.5890555,512,192,Greece,Military
+16,Vial-Chios,XXVial-Chios-NRC_GRE_066,RIC,hellenic army;FRS,38.323907,26.092342,250,250,Greece,Military
+17,Andravida,Andravida_GRE_004,TAS,municipality,37.93842,21.20694,250,250,Greece,Local Government
+18,Derveni-Alexil,XXDerveni-Alexil_GRE_007,TAS,hellenic army,40.724371,22.977128,2500,500,Greece,Military
+19,Eliniko-Hockey,XXElliniko-Hocky_GRE_016,TAS,MoMP,37.897782,23.721911,384,384,Greece,National Government - Immigration
+20,Illiadi,XXIliadi_GRE_020,TAS,hellenic army,40.652469,22.852683,1500,500,Greece,Military
+21,Malakasa,XXMalakasa-MC_GRE_012,TAS,hellenic army;MoMP,38.239334,23.79448,256,128,Greece,Military
+22,Olympic Stadium,XXOlympic-Stadium_GRE_035,TAS,MoMP,37.899761,23.72628,6000,1000,Greece,National Government - Immigration
+23,Rafina,Rafina_GRE_039,TAS,hellenic army;municipality,38.008721,23.995235,250,128,Greece,Military
+24,Ritsona,Ritsona_GRE_040,TAS,hellenic airforce,38.379566,23.50528,10000,10000,Greece,Military
+25,Sindos-Frakapore,XXSindos-Frakapore_GRE_043,TAS,hellenic airforce,40.665894,22.833699,500,200,Greece,Military
+26,Softex,XXSoftex_GRE_045,TAS,hellenic army,40.670109,22.874761,2000,2000,Greece,Military
+27,Souda-Samns-Purse,XXSouda-Samns-Purse_GRE_046,TAS,municipality,38.376007,26.137178,1024,100,Greece,Local Government
+28,Trikala,XXTrikala_GRE_048,TAS,hellenic army,39.556614,21.795056,2048,2048,Greece,Military
+29,Veria,Veria_GRE_054,TAS,hellenic army,40.515403,22.2083197,1000,300,Greece,Military
+30,Kos,Kos_GRE_027,RIC,FRS,36.856614,27.164832,250,250,Greece,National Government - Immigration
+31,Volos,Volos_GRE_055,TAS,hellenic army,39.38166,22.86555,512,256,Greece,Military
+32,Cherso,XXCherso_GRE_005,TAS,hellenic army,41.09448,22.77195,800,300,Greece,Military
+33,Drama,Drama_GRE_011,TAS,ministry of eastern macedonia,41.17143,24.068963,500,500,Greece,National Government - Non-Immigration
+34,Serres,Serres_GRE_042,TAS,MoMP,41.072367,23.54738,15000,15000,Greece,National Government - Immigration
+35,Adasevci,Adasevci_SRB_010,TC,SCRM,45.046579,19.226793,256,128,Serbia,National Government - Immigration
+36,Bujanovac,Bujanovac_SRB_001,RC,MoL/SCRM,42.447372,21.766115,256,128,Serbia,National Government - Non-Immigration
+37,Divljana,Divljana_SRB_002,RC,SCRM,43.189114,22.289346,256,128,Serbia,National Government - Immigration
+38,Kikinda,Kikinda_SRB_007,TC,SCRM,45.71511,20.4913,5000,5000,Serbia,National Government - Immigration
+39,Krnjaca,Krnjaca_SRB_003,AC,SCRM,44.84989,20.527057,256,128,Serbia,National Government - Immigration
+40,Obrenovac,Obrenovac_SRB_011,TC,SCRM,44.669167,20.182722,250,250,Serbia,National Government - Immigration
+41,Pirot,Pirot_SRB_005,RC,SCRM,43.173306,22.618306,256,128,Serbia,National Government - Immigration
+42,Presevo,Presevo_SRB_006,RC,MoL/SCRM,42.300778,21.683333,250,250,Serbia,National Government - Non-Immigration
+43,Sombor,Sombor_SRB_008,TC,SCRM,45.771472,19.073694,6000,1000,Serbia,National Government - Immigration
+,Vathi-Samos,Vathi-Samos_GRE_053,RIC,FRS,37.748339,26.981808,,,Greece,National Government - Immigration
+,Kavala,Kavala_GRE_024,TAS,MoD,40.945283,24.430099,,,Greece,National Government - Non-Immigration

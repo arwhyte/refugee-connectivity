@@ -1,0 +1,11 @@
+################
+#   Database   #
+################
+
+mysql:
+  host: localhost
+  port: 3306
+  user: cyearee
+  passwd: Im.bubba4
+  db: refugee
+  local_infile: True

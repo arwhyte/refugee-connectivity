@@ -1,0 +1,12 @@
+{% extends 'refconn/base.html' %}
+
+  {% block content %}
+
+
+  <form method="post">
+    {% csrf_token %}
+    <p>Are you sure you want to delete the Refugee Camp "{{ camp.camp_name }}"?</p>
+    <button type="submit" class="btn btn-outline-danger">Delete</button>
+    <a class="btn btn-outline-secondary" href="{% url 'camp_detail' camp.pk %}">cancel</a>
+  </form>
+  {% endblock content %}

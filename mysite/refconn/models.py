@@ -7,6 +7,7 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 from django.urls import reverse
+from django.db.models import Sum, Q, F
 
 
 class ApplicationCategory(models.Model):
@@ -54,7 +55,6 @@ class Camp(models.Model):
         # return reverse('site_detail', args=[str(self.id)])
         return reverse('camp_detail', kwargs={'pk': self.pk})
     
-
 class MonthlyUsagePerCamp(models.Model):
     mupc_id = models.AutoField(primary_key=True)
     camp = models.ForeignKey(Camp, models.DO_NOTHING)
@@ -64,11 +64,19 @@ class MonthlyUsagePerCamp(models.Model):
 
     nationality = models.ManyToManyField(Nationality, through='RefugeeNationality')
     application_category = models.ManyToManyField(ApplicationCategory, through='ApplicationUsage')
-
     class Meta:
         managed = False
         db_table = 'monthly_usage_per_camp'
         verbose_name = 'Monthly Data Usage Summary'
+
+    @property
+    def applications(self):
+        tot = MonthlyUsagePerCamp.objects.values(app=F('application_category__application_category_name')).filter(Q(mupc_id=self.pk)&~Q(app='Other'))[:5]
+        vis = []
+        for dic in tot:
+            vis.append(dic['app'])
+        return ', '.join(vis)
+
 
 class ApplicationUsage(models.Model):
     appu_id = models.AutoField(primary_key=True)
@@ -134,7 +142,7 @@ class Country(models.Model):
 class DailyUsagePerCamp(models.Model):
     dupc_id = models.AutoField(primary_key=True)
     mupc = models.ForeignKey('MonthlyUsagePerCamp', models.DO_NOTHING, blank=True, null=True)
-    date_field = models.DateField(db_column='date_field', blank=True, null=True)  # Field renamed because it ended with '_'.
+    date_field = models.DateField(db_column='date_field', blank=True, null=True)  
     total_clients = models.IntegerField(blank=True, null=True)
     total_usage_kb = models.FloatField(db_column='total_usage_kb',blank=True,null=True)
 

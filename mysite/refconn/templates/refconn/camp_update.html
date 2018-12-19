@@ -5,12 +5,13 @@
 {% block content %}
 
   <header>
-    <h2>New Camp</h2>
+    <h2>Camp Update</h2>
   </header>
 
   <!-- novalidate attribute required to render validation messages -->
   <form method="post" novalidate>
     {% csrf_token %}
+    
 
     <div class="row">
       <div class="col-6">
@@ -54,8 +55,10 @@
       </div>
     </div>
 
-    <button type="submit" class="btn btn-outline-success">Add</button>
-    &nbsp;<a class="btn btn-outline-secondary" href="{% url 'camps' %}">Cancel</a>
+    <button type="submit" class="btn btn-outline-success">Update</button>
+    &nbsp;<a class="btn btn-outline-secondary" href="{% url 'camps' %}">cancel</a>
+
+    <!-- Restore missing button -->
   </form>
 
 {% endblock content %}

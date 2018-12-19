@@ -3,13 +3,23 @@
    
    <!-- safe filter on for raw HTML stored in database -->
    {% block content %}
-     {% if user.is_authenticated %}
-
+<!--      {% if user.is_authenticated %}
+ -->
        <header>
          <div class="row">
            <div class="col-sm-10">
              <h2>{{ camp.camp_name | safe }}</h2>
-            </div>
+           </div>
+           <div class="col-xs-1">
+             {% if user.is_authenticated %}
+               <a class="btn btn-outline-secondary" href="{% url 'camp_update' camp.pk %}">Edit</a>
+             {% endif %}
+           </div>
+           <div class="col-xs-1">
+             {% if user.is_authenticated %}
+               &nbsp;<a class="btn btn-outline-warning" href="{% url 'camp_delete' camp.pk %}">Delete</a>
+             {% endif %}
+           </div>
          </div>
        </header>
      
@@ -69,7 +79,7 @@
            </div>
          </div>
        {% endif %}
-     {% else %}
-      <a href="{% url 'login' %}">Log in</a>
-    {% endif %}
+  <!--    {% else %}
+      <a href="{% url 'login' %}">Log in</a> -->
+    <!-- {% endif %} -->
    {% endblock content %}

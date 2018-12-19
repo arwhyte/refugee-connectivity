@@ -1,4 +1,37 @@
 {% extends 'refconn/base.html' %}
-   {% block content %}
-   	<p>nothing yet</p>
-   {% endblock content %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+  <header>
+    <div class="row">
+      <div class="col-sm-11">
+        <h2>Monthly Data Usage Per Camp</h2>
+      </div>
+    </div>
+  </header>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="px-2 py-2" style="border:1px solid #8E8D8A;">
+        <form action="" method="get">
+          {{ filter.form|crispy }}
+          <!-- add a submit button -->
+          <button type="submit" class="btn btn-outline-success">Submit</button>
+          &nbsp;<a class="btn btn-outline-secondary" href="{% url 'camps' %}">Cancel</a>
+        </form>
+      </div>
+    </div>
+    <div class="col-sm-9">
+      {% for mupc in object_list %}
+        <h4><a href="{% url 'mupc_detail' mupc.pk %}">{{ mupc.camp.camp_name | safe }}</a></h4>
+        {% if mupc.month_num and mupc.year_num %}
+          <p>{{ mupc.month_num }}, {{ mupc.year_num }}</p>
+        {% endif %}
+
+    {% empty %}
+      Select one or more filters relevant to your search and then click "filter".
+    {% endfor %}
+    </div>
+  </div>
+{% endblock content %}

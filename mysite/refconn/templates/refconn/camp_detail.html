@@ -1,0 +1,75 @@
+{% extends 'refconn/base.html' %}
+   
+   
+   <!-- safe filter on for raw HTML stored in database -->
+   {% block content %}
+     {% if user.is_authenticated %}
+
+       <header>
+         <div class="row">
+           <div class="col-sm-10">
+             <h2>{{ camp.camp_name | safe }}</h2>
+            </div>
+         </div>
+       </header>
+     
+       
+       {% if camp.country.country_name %}
+        <div class="row">
+          <div class="col-sm-2">
+            <p>Country</p>
+          </div>
+          <div class="col-sm-10">
+            <p>{{ camp.country.country_name }}</p>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if camp.camp_admin.camp_admin_name %}
+        <div class="row">
+          <div class="col-sm-2">
+            <p>Camp Authority</p>
+          </div>
+          <div class="col-sm-10">
+            <p>{{ camp.camp_admin.camp_admin_name }}</p>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if camp.camp_type.camp_type_name %}
+        <div class="row">
+          <div class="col-sm-2">
+            <p>Camp Type</p>
+          </div>
+          <div class="col-sm-10">
+            <p>{{ camp.camp_type.camp_type_name }}</p>
+          </div>
+        </div>
+      {% endif %}
+
+       {% if camp.latitude and camp.longitude %}
+         <div class="row">
+           <div class="col-sm-2">
+             <p>Geo Coordinates</p>
+           </div>
+           <div class="col-sm-4">
+             <p>{{ camp.latitude }}, {{ camp.longitude }} (<span style="font-style:italic">lat</span>.,
+               <span style="font-style:italic">long</span>.)</p>
+           </div>
+         </div>
+       {% endif %}
+     
+       {% if camp.bandwidth_up and camp.bandwidth_down %}
+         <div class="row">
+           <div class="col-sm-2">
+             <p>Bandwidth</p>
+           </div>
+           <div class="col-sm-4">
+             <p>{{ camp.bandwidth_up }} (kB up), {{ camp.bandwidth_down }} (kB down) </p>
+           </div>
+         </div>
+       {% endif %}
+     {% else %}
+      <a href="{% url 'login' %}">Log in</a>
+    {% endif %}
+   {% endblock content %}

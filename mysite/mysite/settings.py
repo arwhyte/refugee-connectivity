@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+from mysite import secrets
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '!i#u^ylku=79l+eqp^@*z5x$l33e3&7f2&cl)kkmgznslp=v)8'
+SECRET_KEY = secrets.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -38,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'test_without_migrations',
+    'social_django',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -48,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -63,13 +68,19 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
 ]
 
+TEST_RUNNER = 'refconn.utils.UnManagedModelTestRunner'
+
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
+# django-crispy-forms
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
@@ -84,6 +95,19 @@ DATABASES = {
         }
     }
 }
+
+# Authentication backends
+# Must include the default Django Auth ModelBackend for the admin site
+
+AUTHENTICATION_BACKENDS = (
+    # 'social_core.backends.open_id.OpenIdAuth',
+    # 'social_core.backends.google.GoogleOpenId',
+    'social_core.backends.google.GoogleOAuth2',                                  # <-- Uncomment
+    # 'social_core.backends.google.GoogleOAuth',
+    # 'social_core.backends.twitter.TwitterOAuth',
+    # 'social_core.backends.yahoo.YahooOpenId',
+    'django.contrib.auth.backends.ModelBackend',                                 # <-- Uncomment
+)
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -103,6 +127,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = secrets.SOCIAL_AUTH_GOOGLE_OAUTH2_KEY
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = secrets.SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
+LOGIN_URL = '/auth/login/google-oauth2/'
+# LOGIN_URL = 'login'
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/

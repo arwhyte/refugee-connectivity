@@ -13,4 +13,8 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), {'next_page': settings.LOGOUT_REDIRECT_URL},
          name='logout'),
     path('refconn/', include('refconn.urls')),
+    path('refconn/api/', include('api.urls')),
+    path('refconn/api/rest-auth/', include('rest_auth.urls')),
+    path('refconn/api/rest-auth/registration/', include('rest_auth.registration.urls')),
+    path('api-auth/', include('rest_framework.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -16,12 +16,62 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Current Database: `refugee`
+-- Table structure for table `account_emailaddress`
 --
 
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `refugee` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */;
+DROP TABLE IF EXISTS `account_emailaddress`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `account_emailaddress` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(254) NOT NULL,
+  `verified` tinyint(1) NOT NULL,
+  `primary` tinyint(1) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`),
+  KEY `account_emailaddress_user_id_2c513194_fk_auth_user_id` (`user_id`),
+  CONSTRAINT `account_emailaddress_user_id_2c513194_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-USE `refugee`;
+--
+-- Dumping data for table `account_emailaddress`
+--
+
+LOCK TABLES `account_emailaddress` WRITE;
+/*!40000 ALTER TABLE `account_emailaddress` DISABLE KEYS */;
+/*!40000 ALTER TABLE `account_emailaddress` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `account_emailconfirmation`
+--
+
+DROP TABLE IF EXISTS `account_emailconfirmation`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `account_emailconfirmation` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `created` datetime(6) NOT NULL,
+  `sent` datetime(6) DEFAULT NULL,
+  `key` varchar(64) NOT NULL,
+  `email_address_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `key` (`key`),
+  KEY `account_emailconfirm_email_address_id_5b7f8c58_fk_account_e` (`email_address_id`),
+  CONSTRAINT `account_emailconfirm_email_address_id_5b7f8c58_fk_account_e` FOREIGN KEY (`email_address_id`) REFERENCES `account_emailaddress` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `account_emailconfirmation`
+--
+
+LOCK TABLES `account_emailconfirmation` WRITE;
+/*!40000 ALTER TABLE `account_emailconfirmation` DISABLE KEYS */;
+/*!40000 ALTER TABLE `account_emailconfirmation` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `application_category`
@@ -147,7 +197,7 @@ CREATE TABLE `auth_permission` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `auth_permission_content_type_id_codename_01ab375a_uniq` (`content_type_id`,`codename`),
   CONSTRAINT `auth_permission_content_type_id_2f476e4b_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -156,7 +206,7 @@ CREATE TABLE `auth_permission` (
 
 LOCK TABLES `auth_permission` WRITE;
 /*!40000 ALTER TABLE `auth_permission` DISABLE KEYS */;
-INSERT INTO `auth_permission` VALUES (1,'Can add log entry',1,'add_logentry'),(2,'Can change log entry',1,'change_logentry'),(3,'Can delete log entry',1,'delete_logentry'),(4,'Can view log entry',1,'view_logentry'),(5,'Can add permission',2,'add_permission'),(6,'Can change permission',2,'change_permission'),(7,'Can delete permission',2,'delete_permission'),(8,'Can view permission',2,'view_permission'),(9,'Can add group',3,'add_group'),(10,'Can change group',3,'change_group'),(11,'Can delete group',3,'delete_group'),(12,'Can view group',3,'view_group'),(13,'Can add user',4,'add_user'),(14,'Can change user',4,'change_user'),(15,'Can delete user',4,'delete_user'),(16,'Can view user',4,'view_user'),(17,'Can add content type',5,'add_contenttype'),(18,'Can change content type',5,'change_contenttype'),(19,'Can delete content type',5,'delete_contenttype'),(20,'Can view content type',5,'view_contenttype'),(21,'Can add session',6,'add_session'),(22,'Can change session',6,'change_session'),(23,'Can delete session',6,'delete_session'),(24,'Can view session',6,'view_session'),(25,'Can add association',7,'add_association'),(26,'Can change association',7,'change_association'),(27,'Can delete association',7,'delete_association'),(28,'Can view association',7,'view_association'),(29,'Can add code',8,'add_code'),(30,'Can change code',8,'change_code'),(31,'Can delete code',8,'delete_code'),(32,'Can view code',8,'view_code'),(33,'Can add nonce',9,'add_nonce'),(34,'Can change nonce',9,'change_nonce'),(35,'Can delete nonce',9,'delete_nonce'),(36,'Can view nonce',9,'view_nonce'),(37,'Can add user social auth',10,'add_usersocialauth'),(38,'Can change user social auth',10,'change_usersocialauth'),(39,'Can delete user social auth',10,'delete_usersocialauth'),(40,'Can view user social auth',10,'view_usersocialauth'),(41,'Can add partial',11,'add_partial'),(42,'Can change partial',11,'change_partial'),(43,'Can delete partial',11,'delete_partial'),(44,'Can view partial',11,'view_partial');
+INSERT INTO `auth_permission` VALUES (1,'Can add log entry',1,'add_logentry'),(2,'Can change log entry',1,'change_logentry'),(3,'Can delete log entry',1,'delete_logentry'),(4,'Can view log entry',1,'view_logentry'),(5,'Can add permission',2,'add_permission'),(6,'Can change permission',2,'change_permission'),(7,'Can delete permission',2,'delete_permission'),(8,'Can view permission',2,'view_permission'),(9,'Can add group',3,'add_group'),(10,'Can change group',3,'change_group'),(11,'Can delete group',3,'delete_group'),(12,'Can view group',3,'view_group'),(13,'Can add user',4,'add_user'),(14,'Can change user',4,'change_user'),(15,'Can delete user',4,'delete_user'),(16,'Can view user',4,'view_user'),(17,'Can add content type',5,'add_contenttype'),(18,'Can change content type',5,'change_contenttype'),(19,'Can delete content type',5,'delete_contenttype'),(20,'Can view content type',5,'view_contenttype'),(21,'Can add session',6,'add_session'),(22,'Can change session',6,'change_session'),(23,'Can delete session',6,'delete_session'),(24,'Can view session',6,'view_session'),(25,'Can add association',7,'add_association'),(26,'Can change association',7,'change_association'),(27,'Can delete association',7,'delete_association'),(28,'Can view association',7,'view_association'),(29,'Can add code',8,'add_code'),(30,'Can change code',8,'change_code'),(31,'Can delete code',8,'delete_code'),(32,'Can view code',8,'view_code'),(33,'Can add nonce',9,'add_nonce'),(34,'Can change nonce',9,'change_nonce'),(35,'Can delete nonce',9,'delete_nonce'),(36,'Can view nonce',9,'view_nonce'),(37,'Can add user social auth',10,'add_usersocialauth'),(38,'Can change user social auth',10,'change_usersocialauth'),(39,'Can delete user social auth',10,'delete_usersocialauth'),(40,'Can view user social auth',10,'view_usersocialauth'),(41,'Can add partial',11,'add_partial'),(42,'Can change partial',11,'change_partial'),(43,'Can delete partial',11,'delete_partial'),(44,'Can view partial',11,'view_partial'),(45,'Can add site',12,'add_site'),(46,'Can change site',12,'change_site'),(47,'Can delete site',12,'delete_site'),(48,'Can view site',12,'view_site'),(49,'Can add email address',13,'add_emailaddress'),(50,'Can change email address',13,'change_emailaddress'),(51,'Can delete email address',13,'delete_emailaddress'),(52,'Can view email address',13,'view_emailaddress'),(53,'Can add email confirmation',14,'add_emailconfirmation'),(54,'Can change email confirmation',14,'change_emailconfirmation'),(55,'Can delete email confirmation',14,'delete_emailconfirmation'),(56,'Can view email confirmation',14,'view_emailconfirmation'),(57,'Can add social account',15,'add_socialaccount'),(58,'Can change social account',15,'change_socialaccount'),(59,'Can delete social account',15,'delete_socialaccount'),(60,'Can view social account',15,'view_socialaccount'),(61,'Can add social application',16,'add_socialapp'),(62,'Can change social application',16,'change_socialapp'),(63,'Can delete social application',16,'delete_socialapp'),(64,'Can view social application',16,'view_socialapp'),(65,'Can add social application token',17,'add_socialtoken'),(66,'Can change social application token',17,'change_socialtoken'),(67,'Can delete social application token',17,'delete_socialtoken'),(68,'Can view social application token',17,'view_socialtoken'),(69,'Can add Token',18,'add_token'),(70,'Can change Token',18,'change_token'),(71,'Can delete Token',18,'delete_token'),(72,'Can view Token',18,'view_token');
 /*!40000 ALTER TABLE `auth_permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -181,7 +231,7 @@ CREATE TABLE `auth_user` (
   `date_joined` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -190,7 +240,7 @@ CREATE TABLE `auth_user` (
 
 LOCK TABLES `auth_user` WRITE;
 /*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
-INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$120000$j50fVraMhI2a$XtYZ24E2Gy9HnTxFaPyQEp7CyT3QYeLp9d+NJp6r5ao=','2018-12-18 19:44:04.479120',1,'cyearee','Yea-Ree','Chang','cyearee@umich.edu',1,1,'2018-12-15 17:57:26.383972');
+INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$120000$j50fVraMhI2a$XtYZ24E2Gy9HnTxFaPyQEp7CyT3QYeLp9d+NJp6r5ao=','2018-12-20 03:45:17.168465',1,'cyearee','Yea-Ree','Chang','cyearee@umich.edu',1,1,'2018-12-15 17:57:26.383972'),(2,'pbkdf2_sha256$120000$udH0agYkHwsu$HfwAHhXjHISBBvE/0pRhAANnj8A7dtJLYyr4kGNl604=',NULL,1,'arwhyte','Anthony','Whyte','arwhyte@umich.edu',1,1,'2018-12-20 03:50:50.000000');
 /*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -251,6 +301,33 @@ LOCK TABLES `auth_user_user_permissions` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `authtoken_token`
+--
+
+DROP TABLE IF EXISTS `authtoken_token`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `authtoken_token` (
+  `key` varchar(40) NOT NULL,
+  `created` datetime(6) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`key`),
+  UNIQUE KEY `user_id` (`user_id`),
+  CONSTRAINT `authtoken_token_user_id_35299eff_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `authtoken_token`
+--
+
+LOCK TABLES `authtoken_token` WRITE;
+/*!40000 ALTER TABLE `authtoken_token` DISABLE KEYS */;
+INSERT INTO `authtoken_token` VALUES ('0ec576c564fe73f953f4a43e902d68bd6556bdf8','2018-12-20 03:52:21.612805',2);
+/*!40000 ALTER TABLE `authtoken_token` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `camp`
 --
 
@@ -276,7 +353,7 @@ CREATE TABLE `camp` (
   CONSTRAINT `camp_admin_id` FOREIGN KEY (`camp_admin_id`) REFERENCES `camp_admin` (`camp_admin_id`),
   CONSTRAINT `camp_type_id` FOREIGN KEY (`camp_type_id`) REFERENCES `camp_type` (`camp_type_id`),
   CONSTRAINT `country_id` FOREIGN KEY (`country_id`) REFERENCES `country` (`country_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -455,7 +532,7 @@ CREATE TABLE `django_admin_log` (
   KEY `django_admin_log_user_id_c564eba6_fk_auth_user_id` (`user_id`),
   CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
   CONSTRAINT `django_admin_log_user_id_c564eba6_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -464,6 +541,7 @@ CREATE TABLE `django_admin_log` (
 
 LOCK TABLES `django_admin_log` WRITE;
 /*!40000 ALTER TABLE `django_admin_log` DISABLE KEYS */;
+INSERT INTO `django_admin_log` VALUES (1,'2018-12-20 03:50:50.563415','2','arwhyte',1,'[{\"added\": {}}]',4,1),(2,'2018-12-20 03:51:29.244356','2','arwhyte',2,'[{\"changed\": {\"fields\": [\"first_name\", \"last_name\", \"email\", \"is_staff\", \"is_superuser\"]}}]',4,1),(3,'2018-12-20 03:52:21.651344','0ec576c564fe73f953f4a43e902d68bd6556bdf8','0ec576c564fe73f953f4a43e902d68bd6556bdf8',1,'[{\"added\": {}}]',18,1);
 /*!40000 ALTER TABLE `django_admin_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -480,7 +558,7 @@ CREATE TABLE `django_content_type` (
   `model` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `django_content_type_app_label_model_76bd3d3b_uniq` (`app_label`,`model`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -489,7 +567,7 @@ CREATE TABLE `django_content_type` (
 
 LOCK TABLES `django_content_type` WRITE;
 /*!40000 ALTER TABLE `django_content_type` DISABLE KEYS */;
-INSERT INTO `django_content_type` VALUES (1,'admin','logentry'),(3,'auth','group'),(2,'auth','permission'),(4,'auth','user'),(5,'contenttypes','contenttype'),(6,'sessions','session'),(7,'social_django','association'),(8,'social_django','code'),(9,'social_django','nonce'),(11,'social_django','partial'),(10,'social_django','usersocialauth');
+INSERT INTO `django_content_type` VALUES (13,'account','emailaddress'),(14,'account','emailconfirmation'),(1,'admin','logentry'),(3,'auth','group'),(2,'auth','permission'),(4,'auth','user'),(18,'authtoken','token'),(5,'contenttypes','contenttype'),(6,'sessions','session'),(12,'sites','site'),(7,'social_django','association'),(8,'social_django','code'),(9,'social_django','nonce'),(11,'social_django','partial'),(10,'social_django','usersocialauth'),(15,'socialaccount','socialaccount'),(16,'socialaccount','socialapp'),(17,'socialaccount','socialtoken');
 /*!40000 ALTER TABLE `django_content_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -506,7 +584,7 @@ CREATE TABLE `django_migrations` (
   `name` varchar(255) NOT NULL,
   `applied` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -515,7 +593,7 @@ CREATE TABLE `django_migrations` (
 
 LOCK TABLES `django_migrations` WRITE;
 /*!40000 ALTER TABLE `django_migrations` DISABLE KEYS */;
-INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2018-12-15 17:25:25.509275'),(2,'auth','0001_initial','2018-12-15 17:25:53.009536'),(3,'admin','0001_initial','2018-12-15 17:26:05.333525'),(4,'admin','0002_logentry_remove_auto_add','2018-12-15 17:26:05.509249'),(5,'admin','0003_logentry_add_action_flag_choices','2018-12-15 17:26:05.673107'),(6,'contenttypes','0002_remove_content_type_name','2018-12-15 17:26:09.023117'),(7,'auth','0002_alter_permission_name_max_length','2018-12-15 17:26:11.069005'),(8,'auth','0003_alter_user_email_max_length','2018-12-15 17:26:11.808948'),(9,'auth','0004_alter_user_username_opts','2018-12-15 17:26:11.923479'),(10,'auth','0005_alter_user_last_login_null','2018-12-15 17:26:13.519099'),(11,'auth','0006_require_contenttypes_0002','2018-12-15 17:26:13.789218'),(12,'auth','0007_alter_validators_add_error_messages','2018-12-15 17:26:13.913380'),(13,'auth','0008_alter_user_username_max_length','2018-12-15 17:26:15.978376'),(14,'auth','0009_alter_user_last_name_max_length','2018-12-15 17:26:18.404108'),(15,'sessions','0001_initial','2018-12-15 17:26:20.399034'),(16,'default','0001_initial','2018-12-18 19:09:05.180363'),(17,'social_auth','0001_initial','2018-12-18 19:09:05.315383'),(18,'default','0002_add_related_name','2018-12-18 19:09:07.855443'),(19,'social_auth','0002_add_related_name','2018-12-18 19:09:07.933992'),(20,'default','0003_alter_email_max_length','2018-12-18 19:09:08.347252'),(21,'social_auth','0003_alter_email_max_length','2018-12-18 19:09:08.450735'),(22,'default','0004_auto_20160423_0400','2018-12-18 19:09:08.545162'),(23,'social_auth','0004_auto_20160423_0400','2018-12-18 19:09:08.646353'),(24,'social_auth','0005_auto_20160727_2333','2018-12-18 19:09:09.179668'),(25,'social_django','0006_partial','2018-12-18 19:09:10.540829'),(26,'social_django','0007_code_timestamp','2018-12-18 19:09:11.908204'),(27,'social_django','0008_partial_timestamp','2018-12-18 19:09:13.673672'),(28,'social_django','0005_auto_20160727_2333','2018-12-18 19:09:13.887875'),(29,'social_django','0001_initial','2018-12-18 19:09:14.062548'),(30,'social_django','0004_auto_20160423_0400','2018-12-18 19:09:14.367473'),(31,'social_django','0002_add_related_name','2018-12-18 19:09:14.617727'),(32,'social_django','0003_alter_email_max_length','2018-12-18 19:09:14.843537');
+INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2018-12-15 17:25:25.509275'),(2,'auth','0001_initial','2018-12-15 17:25:53.009536'),(3,'admin','0001_initial','2018-12-15 17:26:05.333525'),(4,'admin','0002_logentry_remove_auto_add','2018-12-15 17:26:05.509249'),(5,'admin','0003_logentry_add_action_flag_choices','2018-12-15 17:26:05.673107'),(6,'contenttypes','0002_remove_content_type_name','2018-12-15 17:26:09.023117'),(7,'auth','0002_alter_permission_name_max_length','2018-12-15 17:26:11.069005'),(8,'auth','0003_alter_user_email_max_length','2018-12-15 17:26:11.808948'),(9,'auth','0004_alter_user_username_opts','2018-12-15 17:26:11.923479'),(10,'auth','0005_alter_user_last_login_null','2018-12-15 17:26:13.519099'),(11,'auth','0006_require_contenttypes_0002','2018-12-15 17:26:13.789218'),(12,'auth','0007_alter_validators_add_error_messages','2018-12-15 17:26:13.913380'),(13,'auth','0008_alter_user_username_max_length','2018-12-15 17:26:15.978376'),(14,'auth','0009_alter_user_last_name_max_length','2018-12-15 17:26:18.404108'),(15,'sessions','0001_initial','2018-12-15 17:26:20.399034'),(16,'default','0001_initial','2018-12-18 19:09:05.180363'),(17,'social_auth','0001_initial','2018-12-18 19:09:05.315383'),(18,'default','0002_add_related_name','2018-12-18 19:09:07.855443'),(19,'social_auth','0002_add_related_name','2018-12-18 19:09:07.933992'),(20,'default','0003_alter_email_max_length','2018-12-18 19:09:08.347252'),(21,'social_auth','0003_alter_email_max_length','2018-12-18 19:09:08.450735'),(22,'default','0004_auto_20160423_0400','2018-12-18 19:09:08.545162'),(23,'social_auth','0004_auto_20160423_0400','2018-12-18 19:09:08.646353'),(24,'social_auth','0005_auto_20160727_2333','2018-12-18 19:09:09.179668'),(25,'social_django','0006_partial','2018-12-18 19:09:10.540829'),(26,'social_django','0007_code_timestamp','2018-12-18 19:09:11.908204'),(27,'social_django','0008_partial_timestamp','2018-12-18 19:09:13.673672'),(28,'social_django','0005_auto_20160727_2333','2018-12-18 19:09:13.887875'),(29,'social_django','0001_initial','2018-12-18 19:09:14.062548'),(30,'social_django','0004_auto_20160423_0400','2018-12-18 19:09:14.367473'),(31,'social_django','0002_add_related_name','2018-12-18 19:09:14.617727'),(32,'social_django','0003_alter_email_max_length','2018-12-18 19:09:14.843537'),(33,'account','0001_initial','2018-12-20 03:41:58.374204'),(34,'account','0002_email_max_length','2018-12-20 03:41:59.616893'),(35,'authtoken','0001_initial','2018-12-20 03:42:02.850242'),(36,'authtoken','0002_auto_20160226_1747','2018-12-20 03:42:05.260795'),(37,'sites','0001_initial','2018-12-20 03:42:06.219232'),(38,'sites','0002_alter_domain_unique','2018-12-20 03:42:06.810650'),(39,'socialaccount','0001_initial','2018-12-20 03:42:27.852857'),(40,'socialaccount','0002_token_max_lengths','2018-12-20 03:42:28.881105'),(41,'socialaccount','0003_extra_data_default_dict','2018-12-20 03:42:29.037688');
 /*!40000 ALTER TABLE `django_migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -541,8 +619,34 @@ CREATE TABLE `django_session` (
 
 LOCK TABLES `django_session` WRITE;
 /*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
-INSERT INTO `django_session` VALUES ('j4uaomvp78qjz7vlikg3r7v09z0tt6yb','NzUxMWEzZTJhNTkzOWRiZTliYmJhYTU0YWQ3OWQwMjBiM2ZhYTg4OTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJjMjdkYmYzY2E5YzY2ZDU4NmE1ZjkyZjhiMTFiMzgxYjZhYzU0NjJlIn0=','2018-12-29 20:53:53.226732'),('mnk4p3gm5g4dzc795ltpkdtew6h59keu','OTY3ZGQzZThiZWExMmI1NmJiZjFhM2JjZDhmYjY3MDg5MzRjMTY5Mjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJjMjdkYmYzY2E5YzY2ZDU4NmE1ZjkyZjhiMTFiMzgxYjZhYzU0NjJlIiwiZ29vZ2xlLW9hdXRoMl9zdGF0ZSI6IjZPMUhzaXR5WWlHRnkzUHpRaVZ4RFpzSklGTlZiSmV2In0=','2019-01-01 19:44:04.580948');
+INSERT INTO `django_session` VALUES ('gn9v9qofcfmngfwe27whppahi477wd9e','NDYyZDAwMzk4Y2I3ZTBjMzdlYWNiZDdkMTY3MWNiNjc3ZGJhNGM4Yjp7Im5leHQiOiIvcmVmY29ubi9hcGkvc3dhZ2dlci1kb2NzLyIsImdvb2dsZS1vYXV0aDJfc3RhdGUiOiIwVnczYWk1T2VjMlUxRnVlWFRhVlEwWXQ1V0EwcnprViIsIl9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJjMjdkYmYzY2E5YzY2ZDU4NmE1ZjkyZjhiMTFiMzgxYjZhYzU0NjJlIn0=','2019-01-03 03:45:52.181574'),('j4uaomvp78qjz7vlikg3r7v09z0tt6yb','NzUxMWEzZTJhNTkzOWRiZTliYmJhYTU0YWQ3OWQwMjBiM2ZhYTg4OTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJjMjdkYmYzY2E5YzY2ZDU4NmE1ZjkyZjhiMTFiMzgxYjZhYzU0NjJlIn0=','2018-12-29 20:53:53.226732');
 /*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_site`
+--
+
+DROP TABLE IF EXISTS `django_site`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `django_site` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `domain` varchar(100) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `django_site_domain_a2e37b91_uniq` (`domain`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_site`
+--
+
+LOCK TABLES `django_site` WRITE;
+/*!40000 ALTER TABLE `django_site` DISABLE KEYS */;
+INSERT INTO `django_site` VALUES (1,'example.com','example.com');
+/*!40000 ALTER TABLE `django_site` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -771,8 +875,125 @@ CREATE TABLE `social_auth_usersocialauth` (
 
 LOCK TABLES `social_auth_usersocialauth` WRITE;
 /*!40000 ALTER TABLE `social_auth_usersocialauth` DISABLE KEYS */;
-INSERT INTO `social_auth_usersocialauth` VALUES (1,'google-oauth2','cyearee@umich.edu','{\"auth_time\": 1545165572, \"expires\": 3600, \"token_type\": \"Bearer\", \"access_token\": \"ya29.Glt2BruPT3hZcJ-xPOrgDF4KZQYJ-0xSPs7z5VZWPzJ8JdWm20JCcv4h_CinH3MrEWwWk7Gk9sumPuWOijUYKHZMA8VgBAbxOiQTAIzgpGNgRrGOGizHR3mgo7Tl\"}',1);
+INSERT INTO `social_auth_usersocialauth` VALUES (1,'google-oauth2','cyearee@umich.edu','{\"auth_time\": 1545277644, \"expires\": 3599, \"token_type\": \"Bearer\", \"access_token\": \"ya29.Glx4BkVVO6zILeXLeCVpjDehjoxLl2GpmExPlWKU5DZYEnApAuL2il8hHpfBfG1YO6rPkIJl324Bl1XNEFqjHyxQRuJPoBthwMnzdTJ6tHULD_s71RmBmn54hC2-6g\"}',1);
 /*!40000 ALTER TABLE `social_auth_usersocialauth` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `socialaccount_socialaccount`
+--
+
+DROP TABLE IF EXISTS `socialaccount_socialaccount`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `socialaccount_socialaccount` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `provider` varchar(30) NOT NULL,
+  `uid` varchar(191) NOT NULL,
+  `last_login` datetime(6) NOT NULL,
+  `date_joined` datetime(6) NOT NULL,
+  `extra_data` longtext NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `socialaccount_socialaccount_provider_uid_fc810c6e_uniq` (`provider`,`uid`),
+  KEY `socialaccount_socialaccount_user_id_8146e70c_fk_auth_user_id` (`user_id`),
+  CONSTRAINT `socialaccount_socialaccount_user_id_8146e70c_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `socialaccount_socialaccount`
+--
+
+LOCK TABLES `socialaccount_socialaccount` WRITE;
+/*!40000 ALTER TABLE `socialaccount_socialaccount` DISABLE KEYS */;
+/*!40000 ALTER TABLE `socialaccount_socialaccount` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `socialaccount_socialapp`
+--
+
+DROP TABLE IF EXISTS `socialaccount_socialapp`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `socialaccount_socialapp` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `provider` varchar(30) NOT NULL,
+  `name` varchar(40) NOT NULL,
+  `client_id` varchar(191) NOT NULL,
+  `secret` varchar(191) NOT NULL,
+  `key` varchar(191) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `socialaccount_socialapp`
+--
+
+LOCK TABLES `socialaccount_socialapp` WRITE;
+/*!40000 ALTER TABLE `socialaccount_socialapp` DISABLE KEYS */;
+/*!40000 ALTER TABLE `socialaccount_socialapp` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `socialaccount_socialapp_sites`
+--
+
+DROP TABLE IF EXISTS `socialaccount_socialapp_sites`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `socialaccount_socialapp_sites` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `socialapp_id` int(11) NOT NULL,
+  `site_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `socialaccount_socialapp_sites_socialapp_id_site_id_71a9a768_uniq` (`socialapp_id`,`site_id`),
+  KEY `socialaccount_socialapp_sites_site_id_2579dee5_fk_django_site_id` (`site_id`),
+  CONSTRAINT `socialaccount_social_socialapp_id_97fb6e7d_fk_socialacc` FOREIGN KEY (`socialapp_id`) REFERENCES `socialaccount_socialapp` (`id`),
+  CONSTRAINT `socialaccount_socialapp_sites_site_id_2579dee5_fk_django_site_id` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `socialaccount_socialapp_sites`
+--
+
+LOCK TABLES `socialaccount_socialapp_sites` WRITE;
+/*!40000 ALTER TABLE `socialaccount_socialapp_sites` DISABLE KEYS */;
+/*!40000 ALTER TABLE `socialaccount_socialapp_sites` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `socialaccount_socialtoken`
+--
+
+DROP TABLE IF EXISTS `socialaccount_socialtoken`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `socialaccount_socialtoken` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `token` longtext NOT NULL,
+  `token_secret` longtext NOT NULL,
+  `expires_at` datetime(6) DEFAULT NULL,
+  `account_id` int(11) NOT NULL,
+  `app_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `socialaccount_socialtoken_app_id_account_id_fca4e0ac_uniq` (`app_id`,`account_id`),
+  KEY `socialaccount_social_account_id_951f210e_fk_socialacc` (`account_id`),
+  CONSTRAINT `socialaccount_social_account_id_951f210e_fk_socialacc` FOREIGN KEY (`account_id`) REFERENCES `socialaccount_socialaccount` (`id`),
+  CONSTRAINT `socialaccount_social_app_id_636a42d7_fk_socialacc` FOREIGN KEY (`app_id`) REFERENCES `socialaccount_socialapp` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `socialaccount_socialtoken`
+--
+
+LOCK TABLES `socialaccount_socialtoken` WRITE;
+/*!40000 ALTER TABLE `socialaccount_socialtoken` DISABLE KEYS */;
+/*!40000 ALTER TABLE `socialaccount_socialtoken` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -784,4 +1005,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-12-18 15:43:21
+-- Dump completed on 2018-12-19 22:55:10

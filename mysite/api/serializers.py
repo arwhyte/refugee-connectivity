@@ -136,10 +136,8 @@ class MonthlyUsagePerCampSerializer(serializers.ModelSerializer):
 		many=True,
 		read_only=True
 	)
-	refugee_nationality_ids = serializers.PrimaryKeyRelatedField(
-		many=True,
+	refugee_nationalities = serializers.ListField(
 		write_only=True,
-		queryset=Nationality.objects.all(),
 		source='refugee_nationality'
 	)
 	application_usage = ApplicationUsageSerializer(
@@ -147,10 +145,8 @@ class MonthlyUsagePerCampSerializer(serializers.ModelSerializer):
 		many=True,
 		read_only=True
 	)
-	application_usage_ids = serializers.PrimaryKeyRelatedField(
-		many=True,
+	application_usages = serializers.ListField(
 		write_only=True,
-		queryset=ApplicationCategory.objects.all(),
 		source='application_usage'
 	)
 
@@ -164,9 +160,9 @@ class MonthlyUsagePerCampSerializer(serializers.ModelSerializer):
 			'month_num',
 			'year_num',
 			'refugee_nationality',
-			'refugee_nationality_ids',
+			'refugee_nationalities',
 			'application_usage',
-			'application_usage_ids'
+			'application_usages'
 		)
 
 	def create(self, validated_data):
@@ -189,17 +185,17 @@ class MonthlyUsagePerCampSerializer(serializers.ModelSerializer):
 
 		if nationalities is not None:
 			for nat in nationalities:
-				d = dict(nat)
 				RefugeeNationality.objects.create(
 					mupc_id=mupc.mupc_id,
-					nationality_id=nat.nationality_id,
+					nationality_id=nat['nationality_id'],
+					nationality_proportion=nat['nationality_proportion']
 				)
 		if categories is not None:
 			for cat in categories:
-				d = dict(cat)
 				ApplicationUsage.objects.create(
 					mupc_id=mupc.mupc_id,
-					application_category_id=cat.application_category_id,
+					application_category_id=cat['application_category_id'],
+					total_usage_kb=cat['total_usage_kb']
 				)
 		return mupc
 
@@ -227,32 +223,67 @@ class MonthlyUsagePerCampSerializer(serializers.ModelSerializer):
 		)
 		instance.save()
 
-		# If any existing country/areas are not in updated list, delete them
+		# TODO BOTH OF THE CHECKS BELOW NEED TO CHECK TWO PROPERTY VALUES
+		# For refugee nationalities, if the nationality is unchanged but the nationality proportion
+		# has changed then update.
+		# For app categories, if the app category is unchanged but the total usage in kb has
+		# changed, then update.
+
+		# If any existing nationalities are not in updated list, delete them
 		new_ids = []
 		old_ids = RefugeeNationality.objects \
 			.values_list('nationality_id', flat=True) \
 			.filter(mupc_id__exact=mupc_id)
 
-		# TODO Insert may not be required (Just return instance)
-
 		# Insert new unmatched country entries
 		for nat in new_nationalities:
-			new_id = nat.nationality_id
+			new_id = nat['nationality_id']
 			new_ids.append(new_id)
 			if new_id in old_ids:
 				continue
 			else:
-				RefugeeNationality.objects \
-					.create(mupc_id=mupc_id, nationality_id=new_id)
+				RefugeeNationality.objects.create(
+					mupc_id=mupc_id,
+					nationality_id=new_id,
+					nationality_proportion=nat['nationality_proportion']
+				)
 
 		# Delete old unmatched country entries
 		for old_id in old_ids:
 			if old_id in new_ids:
 				continue
 			else:
-				RefugeeNationality.objects \
-					.filter(mupc_id=mupc_id, nationality_id=old_id) \
-					.delete()
+				RefugeeNationality.objects.filter(
+					mupc_id=mupc_id,
+					nationality_id=old_id
+				).delete()
+
+		new_category_ids = []
+		old_category_ids = ApplicationUsage.objects.values_list(
+			'application_category_id', flat=True
+		).filter(mupc_id__exact=mupc_id)
+
+		# Insert new unmatched category entries
+		for category in new_categories:
+			new_id = category['application_category_id']
+			new_category_ids.append(new_id)
+			if new_id in old_category_ids:
+				continue
+			else:
+				ApplicationUsage.objects.create(
+					mupc_id=mupc_id,
+					application_category_id=new_id,
+					total_usage_kb=category['total_usage_kb']
+				)
+
+		# Delete old unmatched country entries
+		for old_id in old_category_ids:
+			if old_id in new_category_ids:
+				continue
+			else:
+				ApplicationUsage.objects.filter(
+					mupc_id=mupc_id,
+					application_category_id=old_id
+				).delete()
 
 		return instance
-

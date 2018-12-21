@@ -18,7 +18,6 @@ urlpatterns = [
     path('daily/', views.DupcFilterView.as_view(), name='dupc_filter'),
     path('monthly/<int:pk>/', views.MupcDetailView.as_view(), name='mupc_detail'),
     path('daily/<int:pk>/', views.DupcDetailView.as_view(), name='dupc_detail'),
-    path('auth/', include('social_django.urls', namespace='social')),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), {'next_page': settings.LOGOUT_REDIRECT_URL},name='logout'),
 ]
